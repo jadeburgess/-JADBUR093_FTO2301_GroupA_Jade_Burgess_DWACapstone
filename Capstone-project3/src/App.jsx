@@ -1,3 +1,6 @@
+//This App component is the root component of the application and manages the state for favorited podcasts and mini player data. 
+//It sets up the routes for different pages and renders the corresponding components based on the current URL. 
+//Additionally, it renders the MiniPlayer component when miniPlayerData is available. 
 //login and miniPlayer not working
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -10,11 +13,12 @@ import Episode from './Components/Episode';
 import MiniPlayer from './Components/MiniPlayer'; // Import the new MiniPlayer component
 
 export default function App() {
+  // State to manage favorited podcasts and mini player data
   const [favoritePodcasts, setFavoritePodcasts] = useState([]);
   const [miniPlayerData, setMiniPlayerData] = useState(null);
   const [isMiniPlayerPlaying, setIsMiniPlayerPlaying] = useState(false);
 
-  // Load favorited podcasts from local storage on component mount
+  // Loads favorited podcasts from local storage on component mount
   useEffect(() => {
     const storedFavorites = localStorage.getItem('favoritePodcasts');
     console.log('Stored Favorites:', storedFavorites);
@@ -23,7 +27,7 @@ export default function App() {
     }
   }, []);
 
-  // Save favorited podcasts to local storage whenever it changes
+  // Saves favorited podcasts to local storage whenever it changes
   useEffect(() => {
     localStorage.setItem('favoritePodcasts', JSON.stringify(favoritePodcasts));
   }, [favoritePodcasts]);
@@ -67,10 +71,10 @@ export default function App() {
             path="/favorites"
             element={<FavoritesPage favoritePodcasts={favoritePodcasts} />}
           />
-          {/* Pass the id prop to the Episode component */}
+          {/* Passes the id prop to the Episode component */}
           <Route path="/episode/:id" element={<Episode onMiniPlayerOpen={handleMiniPlayerOpen} />} />
         </Routes>
-        {/* Add the MiniPlayer component */}
+        {/* Adds the MiniPlayer component */}
         {miniPlayerData && (
           <MiniPlayer
             episodeData={miniPlayerData}

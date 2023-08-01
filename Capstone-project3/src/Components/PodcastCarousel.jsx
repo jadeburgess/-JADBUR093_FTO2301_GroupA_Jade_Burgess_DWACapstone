@@ -1,3 +1,9 @@
+// represents a React component called PodcastCarousel that displays a carousel of recommended podcasts.
+// It uses the react-slick library for carousel functionality.
+// The component fetches podcast data from an API using axios and renders each podcast as a slide in the carousel. 
+// It also includes custom NextArrow and PrevArrow components to control the carousel navigation.
+// It provides a "Read More" feature to toggle the expanded description of each podcast.
+// component working
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -19,6 +25,7 @@ const PrevArrow = ({ onClick }) => (
   </button>
 );
 
+// PodcastCarousel component to display a carousel of recommended podcasts
 export default function PodcastCarousel() {
   const [podcasts, setPodcasts] = useState([]);
   const [expandedDescription, setExpandedDescription] = useState({});
@@ -35,6 +42,7 @@ export default function PodcastCarousel() {
       });
   }, []);
 
+  // Function to handle "Read More" click and toggle expanded podcast description
   const handleReadMoreClick = (podcastId) => {
     setExpandedDescription((prevState) => ({
       ...prevState,
@@ -42,21 +50,24 @@ export default function PodcastCarousel() {
     }));
   };
 
+  // Settings for the carousel using the react-slick library
   const settings = {
     dots: false,
     infinite: true,
     slidesToShow: 1, // Display only one podcast at a time
     slidesToScroll: 1,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
+    nextArrow: <NextArrow />, // Custom NextArrow component
+    prevArrow: <PrevArrow />, // Custom PrevArrow component
   };
 
   return (
     <div className="carousel-container">
       <h1 className='recomended-podcasts'>recommended podcasts</h1>
+      {/* Create a carousel using the react-slick Slider component */}
       <Slider {...settings}>
         {podcasts.map((podcast) => (
           <div key={podcast.id} className="carousel-item">
+             {/* Link to the podcast details page */}
             <Link to={`/podcast/${podcast.id}`}>
               <img src={podcast.image} alt={podcast.title} />
             </Link>

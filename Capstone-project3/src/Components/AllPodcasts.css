@@ -36,6 +36,15 @@
     grid-template-columns: repeat(3, 1fr); 
     gap: 20px;
   }
+
+  
+  /* responsive design  */
+@media screen and (max-width: 768px) {
+  /* For screens with a width of 768px or less (e.g., mobile view) */
+  .podcasts-list {
+    grid-template-columns: 1fr; /* Display one card at a time */
+  }
+}
   
   .podcast-item {
     display: table-row;
@@ -60,6 +69,7 @@
     border-radius: 8px;
     align-self: center;
   }
+
 
   .podcast-item a {
     text-decoration: none;
@@ -149,11 +159,14 @@
 .imput-search-bar {
   padding: 5%;
   margin: 5%;
+  color: #000;
   
 }
 
 .podcast-search-bar {
   border-radius: 10px;
-  color: aliceblue;
+  color: black;
   margin-left: 5%;
 }
+
+

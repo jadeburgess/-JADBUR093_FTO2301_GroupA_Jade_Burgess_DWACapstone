@@ -1,3 +1,8 @@
+// represents a React component called FavoritesPage, which displays a list of favorite podcasts.
+// It allows sorting the podcasts alphabetically or by date and includes a "Show More" button to reveal more details about each podcast.
+// The component also provides a "See Podcast" link to navigate to the individual podcast page. 
+// The getGenreTitle function retrieves the genre title based on the genre ID from a predefined mapping.
+//all working, except genre
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './FavoritesPage.css'; 
@@ -14,6 +19,7 @@ const genreMapping = {
     9: 'Kids and Family',
   };
   
+  // Function to get the genre title based on the genreId
   const getGenreTitle = (genreId) => {
     console.log('Genre ID:', genreId);
     console.log('Genre Mapping:', genreMapping);
@@ -30,10 +36,12 @@ export default function FavoritesPage({ favoritePodcasts }) {
   const [sortedPodcasts, setSortedPodcasts] = useState(favoritePodcasts);
   const [sortOption, setSortOption] = useState('a-z');
 
+  // Function to toggle showMore state on "Show More" button click
   const handleSeeMoreClick = () => {
     setShowMore(!showMore);
   };
 
+  // Function to handle sorting of favorite podcasts based on the selected option
   const handleSort = (option) => {
     setSortOption(option);
     switch (option) {
@@ -58,31 +66,33 @@ export default function FavoritesPage({ favoritePodcasts }) {
     <div>
       <h1 className='favorite-page-heading'>Favorites Page</h1>
       <div className="sort-buttons">
+        {/* Buttons to trigger different sorting options */}
         <button onClick={() => handleSort('a-z')}>A-Z</button>
         <button onClick={() => handleSort('z-a')}>Z-A</button>
         <button onClick={() => handleSort('date-asc')}>oldest to newest</button>
         <button onClick={() => handleSort('date-desc')}>newest to oldest</button>
       </div>
-      <div className="container"> {/* Wrap the podcast previews with the container class */}
+      <div className="container"> {/* Wraps the podcast previews with the container class */}
         {sortedPodcasts.map((podcast) => (
           <div key={podcast.id} className="podcast-item">
             <img src={podcast.image} alt={podcast.title} />
             <h3 className='favorite-page-podcast-title'>{podcast.title}</h3>
             {showMore ? (
+              // Shows podcast details if showMore is true
               <>
                 <p className='favorite-page-podcast-description'>{podcast.description}</p>
                 <div className="podcast-details">
+                   {/* Displays additional podcast details */}
                   <p>Genre:  {getGenreTitle(parseInt(podcast.genre))}</p>
                   <p>Seasons: {podcast.seasons}</p>
                   <p>Updated: {new Date(podcast.updated).toLocaleDateString('en-GB')}</p>
                 </div>
-                {/* <h4>Episodes: </h4> */}
+                 {/* Displays episodes */}
                 {podcast.episodes &&
                   podcast.episodes.map((episode) => (
                     <div key={episode.id} className="episode-item">
                       <h5>{episode.title}</h5>
                       <p>{episode.description}</p>
-                      {/* Add any other episode details here */}
                     </div>
                   ))}
                 <button
@@ -90,6 +100,7 @@ export default function FavoritesPage({ favoritePodcasts }) {
                 onClick={handleSeeMoreClick}>Show Less</button> {/* Change the button text to "Show Less" */}
               </>
             ) : (
+               // Shows summary if showMore is false
               <>
                 <button 
                 className='favorite-page-show-more-button'

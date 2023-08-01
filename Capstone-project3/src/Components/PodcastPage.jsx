@@ -1,3 +1,6 @@
+// Represents a React component called PodcastPage that displays details of a specific podcast, including its seasons and episodes.
+// Each season and episode can be toggled to show/hide their details.
+// It also includes a MiniPlayer component to play selected episodes.
 //MiniPlayer not working
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
@@ -5,6 +8,7 @@ import './PodcastPage.css';
 import Episode from './Episode';
 import MiniPlayer from './MiniPlayer'; // Import the MiniPlayer component
 
+// PodcastPage component to display details of a specific podcast
 export default function PodcastPage() {
   const { id } = useParams();
   const [podcast, setPodcast] = useState(null);
@@ -43,6 +47,7 @@ export default function PodcastPage() {
     fetchPodcastData();
   }, [id]);
 
+  // Error handling
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -166,6 +171,14 @@ export default function PodcastPage() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
 
 
 
